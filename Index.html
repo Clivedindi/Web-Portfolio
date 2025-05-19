@@ -210,3 +210,69 @@
     </div>
 </section>
 {% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="portfolio-header">
+    <div class="container">
+        <h1 class="page-title">My Portfolio</h1>
+        <p class="page-subtitle">A collection of my recent work and projects</p>
+        
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="python">Python</button>
+            <button class="filter-btn" data-filter="security">Security</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio-grid">
+    <div class="container">
+        <div class="grid-sizer"></div>
+        {% for project in projects %}
+        <div class="portfolio-item" data-category="{{ project.category }}">
+            <div class="item-inner">
+                <div class="portfolio-image">
+                    <img src="{{ url_for('static', filename=project.image_path) }}" alt="{{ project.title }}">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>{{ project.title }}</h3>
+                            <p>{{ project.technologies }}</p>
+                            <a href="{{ url_for('project_detail', project_id=project.id) }}" class="btn btn-small">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncate(150) }}</p>
+                    <div class="project-meta">
+                        <span class="date">{{ project.date_created.strftime('%b %Y') }}</span>
+                        <span class="category">{{ project.category }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2>Have a project in mind?</h2>
+        <p>I'm available for freelance work and collaborations. Let's discuss how I can help bring your ideas to life.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary btn-large">Get In Touch</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+{% endblock %}

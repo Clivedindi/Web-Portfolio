@@ -95,3 +95,118 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Hi, I'm <span>Clive Dindi</span></h1>
+            <h2>Software Developer & Cybersecurity Enthusiast</h2>
+            <p>I create innovative solutions through code with a focus on Python development, web applications, and security.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('portfolio') }}" class="btn btn-primary">View My Work</a>
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary">Hire Me</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="image-wrapper">
+                <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Clive Dindi" class="profile-img">
+                <div class="image-decorator"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="skills-section">
+    <div class="container">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Software Development</h3>
+                <p>Python, Flask, Django, API Development, Debugging</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Cybersecurity</h3>
+                <p>Security principles, Vulnerability assessment, Secure coding</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+                <h3>Graphic Design</h3>
+                <p>UI/UX principles, Logo design, Brand identity</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h3>Transcription</h3>
+                <p>Audio transcription, Document processing, Data entry</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-projects">
+    <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{{ url_for('static', filename=project.image_path) }}" alt="{{ project.title }}">
+                    <div class="project-overlay">
+                        <a href="{{ url_for('project_detail', project_id=project.id) }}" class="btn btn-small">View Details</a>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncate(100) }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies.split(',') %}
+                        <span class="tech-tag">{{ tech.strip() }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-cta">
+            <a href="{{ url_for('portfolio') }}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">What Clients Say</h2>
+        <div class="testimonial-slider">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"{{ testimonial.content }}"</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <img src="{{ url_for('static', filename=testimonial.image_path) }}" alt="{{ testimonial.name }}">
+                    </div>
+                    <div class="author-info">
+                        <h4>{{ testimonial.name }}</h4>
+                        <p>{{ testimonial.position }}, {{ testimonial.company }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
